@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float bulletLifespan = 3.0f;
+    [SerializeField] private float bulletSpeed = 5f;
+    private Rigidbody2D rigidbody2D;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Start(){
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+    private void Update(){
+        bulletLifespan -= Time.deltaTime;
+        if(bulletLifespan < 0){
+            Destroy(this.gameObject);
+        }
+    }
+    private void FixedUpdate(){
+        rigidbody2D.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
     }
 }
