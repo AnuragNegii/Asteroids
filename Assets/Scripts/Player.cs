@@ -25,7 +25,8 @@ public class Player : MonoBehaviour {
             transform.localRotation = transform.localRotation * Quaternion.Euler(0, 0, -1.0f * rotationSpeed * Time.deltaTime);            
         }
         if(Input.GetKeyDown(KeyCode.Space)){
-            Instantiate(bulletGameObject, bulletInstantiatePosition.position, Quaternion.identity);
+            GameObject bulletPrefab = Instantiate(bulletGameObject, bulletInstantiatePosition.position, Quaternion.identity);
+            bulletPrefab.transform.rotation = transform.rotation;
         }
     }
     private void FixedUpdate(){

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2061960374666636642}
   - component: {fileID: 2035120267217718778}
   - component: {fileID: 5343786367793615353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b2c34145907c6f49fadc67b2c348b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletGameObject: {fileID: 0}
+  bulletInstantiatePosition: {fileID: 0}
   rotationSpeed: 100
 --- !u!1 &7107416775098914389
 GameObject:
@@ -130,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8881681284634866330}
   - component: {fileID: 5539029026012970173}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
