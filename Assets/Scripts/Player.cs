@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigidBody2D;
 
     [SerializeField] private GameObject bulletGameObject;
     [SerializeField] private Transform bulletInstantiatePosition;
@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     private bool forcePressed;
     [SerializeField] private float rotationSpeed = 5f;
     private void Start(){
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Update(){
@@ -38,6 +38,6 @@ public class Player : MonoBehaviour {
 
     private void ForceForPlayer(){
         
-        rigidbody2D.AddForce(transform.up * force);
+        rigidBody2D.AddForce(transform.up * force);
     }
 }

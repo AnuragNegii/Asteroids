@@ -6,18 +6,25 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float bulletLifespan = 3.0f;
     [SerializeField] private float bulletSpeed = 5f;
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigidBody2D;
 
     private void Start(){
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
     }
     private void Update(){
         bulletLifespan -= Time.deltaTime;
-        if(bulletLifespan < 0){
-            Destroy(this.gameObject);
+        if(bulletLifespan <= 0){
+            Destroy(gameObject);
         }
     }
     private void FixedUpdate(){
-        rigidbody2D.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+        rigidBody2D.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "Asteroid"){
+            other.gameObject.GetComponent<AsteroidScript>().Split();
+            Destroy(gameObject);
+        }
     }
 }
