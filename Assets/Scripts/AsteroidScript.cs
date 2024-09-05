@@ -1,14 +1,11 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 
-public class AsteroidScript : MonoBehaviour{
+public class AsteroidScript : MonoBehaviour, IAllObjects{
     [SerializeField] private AsteroidSO asteroidSO;
     float asteroidSpeed = 3.0f;
-
     private void Start(){
         MoveRotation();
     }
-
     private void Update(){
         transform.position += transform.up * asteroidSpeed * Time.deltaTime;
     }
@@ -16,7 +13,6 @@ public class AsteroidScript : MonoBehaviour{
     private void MoveRotation(){
         float zRotation = Random.Range(0, 360);
         transform.localRotation = transform.rotation * Quaternion.Euler(0 , 0, zRotation);
-        Debug.Log(zRotation);
     }
 
     public void Split(){
@@ -32,4 +28,23 @@ public class AsteroidScript : MonoBehaviour{
         }
         }
     }
+
+    public void OutOfBoundsY(){
+        if(transform.position.y > 0){
+            transform.position = new Vector3(transform.position.x, (transform.position.y * -1 )+ 0.5f, 0);
+        }else if(transform.position.y < 0){
+            transform.position = new Vector3(transform.position.x, (transform.position.y * -1 )- 0.5f, 0);
+        }
+    }
+
+    public void OutOfBoundsX(){
+
+        Debug.Log("Triggered");
+        if(transform.position.x > 0){
+            transform.position = new Vector3((transform.position.x * -1 )+ 0.5f, transform.position.y,0);
+        }else if(transform.position.x < 0){
+            transform.position = new Vector3((transform.position.x * -1 )- 0.5f, transform.position.y,0);
+        }
+    }
+
 }
