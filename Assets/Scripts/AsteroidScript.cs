@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class AsteroidScript : MonoBehaviour, IAllObjects{
     [SerializeField] private AsteroidSO asteroidSO;
-    float asteroidSpeed = 3.0f;
+    [SerializeField] private GameObject asteroidParent;
+    float asteroidSpeed = 2.0f;
     private void Start(){
+        asteroidParent = GameObject.Find("AllAsteroids");
         MoveRotation();
     }
     private void Update(){
@@ -21,6 +23,7 @@ public class AsteroidScript : MonoBehaviour, IAllObjects{
         }else{
         foreach(GameObject gameObject in asteroidSO.GetAsteroidGameObjects()){
             GameObject smallAsteroidPrefab = Instantiate(gameObject);
+            smallAsteroidPrefab.transform.parent = asteroidParent.transform;
             smallAsteroidPrefab.transform.position = new Vector3(Random.Range(transform.position.x -1, transform.position.x+1), 
                                                                     Random.Range(transform.position.y -1, transform.position.y+1), 0);
 
@@ -38,8 +41,6 @@ public class AsteroidScript : MonoBehaviour, IAllObjects{
     }
 
     public void OutOfBoundsX(){
-
-        Debug.Log("Triggered");
         if(transform.position.x > 0){
             transform.position = new Vector3((transform.position.x * -1 )+ 0.5f, transform.position.y,0);
         }else if(transform.position.x < 0){

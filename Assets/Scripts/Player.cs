@@ -1,14 +1,23 @@
+using System;
+using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour, IAllObjects {
 
+    public static Player Instance{get; private set;}
     private Rigidbody2D rigidBody2D;
+    public event EventHandler YouDiedEvent;
 
     [SerializeField] private GameObject bulletGameObject;
     [SerializeField] private Transform bulletInstantiatePosition;
     private float force = 5f;
     private bool forcePressed;
     [SerializeField] private float rotationSpeed = 5f;
+
+    public void Awake(){
+        Instance = this;
+    }
     private void Start(){
         rigidBody2D = GetComponent<Rigidbody2D>();
     }
@@ -23,7 +32,7 @@ public class Player : MonoBehaviour, IAllObjects {
         if(Input.GetKey(KeyCode.D)){
             transform.localRotation = transform.localRotation * Quaternion.Euler(0, 0, -1.0f * rotationSpeed * Time.deltaTime);            
         }
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(Input.GetMouseButtonDown(0)){
             GameObject bulletPrefab = Instantiate(bulletGameObject, bulletInstantiatePosition.position, Quaternion.identity);
             bulletPrefab.transform.rotation = transform.rotation;
         }
@@ -31,8 +40,7 @@ public class Player : MonoBehaviour, IAllObjects {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Asteroid"){
-            Debug.Log("Destroy");
-            Destroy(gameObject);
+            YouDiedEvent?.Invoke(this, EventArgs.Empty);
         }
         if(other.gameObject.tag == "WallX"){
             OutOfBoundsX();
@@ -41,6 +49,7 @@ public class Player : MonoBehaviour, IAllObjects {
             OutOfBoundsY();
         }
     }
+
     private void FixedUpdate(){
         if(forcePressed){
             ForceForPlayer();
@@ -60,12 +69,14 @@ public class Player : MonoBehaviour, IAllObjects {
     }
 
     public void OutOfBoundsX(){
-
-        Debug.Log("Triggered");
         if(transform.position.x > 0){
             transform.position = new Vector3((transform.position.x * -1 )+ 0.5f, transform.position.y,0);
         }else if(transform.position.x < 0){
             transform.position = new Vector3((transform.position.x * -1 )- 0.5f, transform.position.y,0);
         }
+    }
+
+    public void ResetPlayer(){
+        transform.position = new Vector3(0 , 0, 0);
     }
 }

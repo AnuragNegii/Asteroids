@@ -4,7 +4,6 @@ public class WallX : MonoBehaviour{
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Asteroid" ){
-            Debug.Log("Entered");
             other.gameObject.GetComponent<AsteroidScript>().OutOfBoundsX();
         }
     }
